@@ -3,7 +3,7 @@
 > **Multi-Agent 编排工作室台** — 面向 **Agent / AI Engineer** 岗位的独立作品集项目。  
 > 使用最新 **Vercel AI SDK（ToolLoopAgent + Subagents + Streaming UI）** 构建，覆盖工具调用、子代理委派、会话记忆、产物落盘与运行轨迹。
 
-[![CI](https://github.com/kk18615105392/ForgeAgent/actions/workflows/ci.yml/badge.svg)](https://github.com/kk18615105392/ForgeAgent/actions/workflows/ci.yml)
+[![CI](https://github.com/kk18615105392/Agent/actions/workflows/ci.yml/badge.svg)](https://github.com/kk18615105392/Agent/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![AI SDK](https://img.shields.io/badge/AI%20SDK-7-blue)](https://ai-sdk.dev/)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
@@ -60,8 +60,8 @@ Orchestrator (ToolLoopAgent)
 ### 安装与运行
 
 ```bash
-git clone https://github.com/kk18615105392/ForgeAgent.git
-cd ForgeAgent   # 若本地目录名为 forge-agent，则 cd forge-agent
+git clone https://github.com/kk18615105392/Agent.git
+cd Agent   # 本地开发目录也可能是 forge-agent
 
 cp .env.example .env.local
 # 编辑 .env.local，填入 OPENAI_API_KEY

@@ -10,7 +10,7 @@
 **ForgeAgent — 基于 Vercel AI SDK 的多 Agent 编排工作台**  
 （Next.js + ToolLoopAgent + Subagents + 流式 UI）
 
-仓库：`https://github.com/kk18615105392/ForgeAgent`（推送完成后可用）
+仓库：`https://github.com/kk18615105392/Agent`
 
 ---
 
