@@ -30,14 +30,30 @@ export function WorkspacePanel({ refreshKey }: { refreshKey: number }) {
 
   const load = useCallback(async () => {
     const res = await fetch("/api/workspace");
-    if (res.ok) setData(await res.json());
+    if (!res.ok) return;
+    const json = (await res.json()) as Workspace;
+    setData(json);
   }, []);
 
   useEffect(() => {
-    void load();
-    const t = setInterval(() => void load(), 2500);
-    return () => clearInterval(t);
-  }, [load, refreshKey]);
+    let alive = true;
+    const run = () => {
+      void fetch("/api/workspace")
+        .then((res) => (res.ok ? res.json() : null))
+        .then((json: Workspace | null) => {
+          if (alive && json) setData(json);
+        });
+    };
+
+    // 异步调度，避免在 effect 同步阶段直接 setState
+    const boot = window.setTimeout(run, 0);
+    const timer = window.setInterval(run, 2500);
+    return () => {
+      alive = false;
+      window.clearTimeout(boot);
+      window.clearInterval(timer);
+    };
+  }, [refreshKey]);
 
   return (
     <aside className="flex h-full min-h-0 flex-col border-l border-[var(--line)] bg-[var(--panel)] backdrop-blur-md">
@@ -64,7 +80,9 @@ export function WorkspacePanel({ refreshKey }: { refreshKey: number }) {
         ))}
         <button
           type="button"
-          onClick={() => void fetch("/api/workspace", { method: "DELETE" }).then(load)}
+          onClick={() =>
+            void fetch("/api/workspace", { method: "DELETE" }).then(() => load())
+          }
           className="ml-auto text-xs text-[var(--muted)] hover:text-[var(--danger)]"
         >
           清空轨迹

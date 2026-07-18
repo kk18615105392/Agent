@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, Sora } from "next/font/google";
 import "./globals.css";
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-sora",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+});
 
 export const metadata: Metadata = {
   title: "ForgeAgent — Multi-Agent Orchestration Studio",
@@ -13,16 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-full antialiased">{children}</body>
+    <html lang="zh-CN" className={`h-full ${sora.variable} ${plexMono.variable}`}>
+      <body className="min-h-full font-sans antialiased">{children}</body>
     </html>
   );
 }

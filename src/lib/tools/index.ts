@@ -35,7 +35,6 @@ export const sharedTools = {
         return { ok: false, error: "表达式包含非法字符" };
       }
       try {
-        // eslint-disable-next-line no-new-func
         const value = Function(`"use strict"; return (${expression});`)() as number;
         if (typeof value !== "number" || !Number.isFinite(value)) {
           return { ok: false, error: "计算结果无效" };
