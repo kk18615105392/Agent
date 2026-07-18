@@ -28,4 +28,5 @@ curl http://localhost:3000/api/health
 npm run build && npm start
 ```
 
-面试包装文案见仓库根目录 [README.md](../README.md)。
+项目说明见 [README.md](../README.md)。  
+面试说明见 [interview.md](interview.md)。
