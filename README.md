@@ -1,159 +1,82 @@
-# ForgeAgent
+# ForgeAgent｜面试说明
 
-> **Multi-Agent 编排工作室台** — 面向 **Agent / AI Engineer** 岗位的独立作品集项目。  
-> 使用最新 **Vercel AI SDK（ToolLoopAgent + Subagents + Streaming UI）** 构建，覆盖工具调用、子代理委派、会话记忆、产物落盘与运行轨迹。
-
-[![CI](https://github.com/kk18615105392/Agent/actions/workflows/ci.yml/badge.svg)](https://github.com/kk18615105392/Agent/actions/workflows/ci.yml)
-[![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![AI SDK](https://img.shields.io/badge/AI%20SDK-7-blue)](https://ai-sdk.dev/)
-[![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
+> 投递方向：Agent 工程师 / AI 应用开发 / LLM 应用工程师  
+> 仓库：https://github.com/kk18615105392/Agent  
+> 本地运行见 [docs/setup.md](docs/setup.md)
 
 ---
 
-## 项目定位（面试一句话）
+## 一句话介绍
 
-ForgeAgent 是一个可运行的 **Agent 运行时演示**：主编排代理通过 Tool Loop 自主选工具，必要时把调研 / 分析 / 写作委派给 **Subagent**，并提供 Memory、Artifacts 与 Trace 面板，方便讲清「如何把 LLM 做成可观测、可协作的 Agent 系统」。
-
-本仓库与任何短链 / 分库分表项目 **无关联**，专注 Agent 工程能力。
+基于 **Vercel AI SDK（ToolLoopAgent + Subagents）** 的多 Agent 编排工作台：主编排代理自主调用工具，把调研 / 分析 / 写作委派给专用 Subagent，并配套 Memory、Artifacts、Trace，形成可演示、可讲解的 Agent 工程闭环。
 
 ---
 
-## 技术栈（刻意对齐最新 Agent 开发工具）
+## 简历怎么写（可直接粘贴）
 
-| 能力 | 实现 |
-|------|------|
-| Agent 本体 | `ToolLoopAgent`（AI SDK 7） |
-| 子代理 | Research / Analyst / Writer Subagents + 委派 Tools |
-| 工具调用 | Knowledge / Calculate / Plan / Memory / Artifacts / Mock Search |
-| 流式 UI | `createAgentUIStreamResponse` + `@ai-sdk/react` `useChat` |
-| 循环控制 | `stepCountIs` |
-| 可观测性 | Lifecycle callbacks → Trace 面板 |
-| 应用框架 | Next.js 16 App Router + TypeScript |
+**ForgeAgent｜多 Agent 编排工作台｜个人项目**  
+`Next.js · Vercel AI SDK · TypeScript · ToolLoopAgent`
+
+- 使用 AI SDK `ToolLoopAgent` 构建主编排 Agent，实现多步工具调用与停止条件控制，完成任务规划到结果交付的闭环。  
+- 引入 Research / Analyst / Writer Subagent 委派机制，隔离高消耗调研与成文流程，保持主 Agent 上下文可控。  
+- 实现 Memory / Artifacts / Trace 可观测能力，支持会话记忆检索、产物落盘与工具执行轨迹展示。  
+- 搭建流式对话 UI，形成可演示、可讲解的 Agent 工程作品。
 
 ---
 
-## 架构
+## 我完成了什么
 
-```text
-用户
-  │  stream chat
-  ▼
-Orchestrator (ToolLoopAgent)
-  ├─ shared tools (knowledge / memory / artifacts / calc …)
-  ├─ delegateResearch  → Research Subagent
-  ├─ delegateAnalysis  → Analyst Subagent
-  └─ delegateWriting   → Writer Subagent
-         │
-         ▼
-   Traces / Memory / Artifacts 侧边栏
-```
+1. 基于 **AI SDK 7 `ToolLoopAgent`** 实现主编排 Agent，支持多步 Tool Calling 与 `stepCountIs` 循环控制。  
+2. 设计并落地 **Research / Analyst / Writer 三类 Subagent**，通过委派工具做上下文卸载与能力隔离。  
+3. 实现 **Knowledge 检索、任务计划、Session Memory、Artifacts、Mock Search** 等工具集。  
+4. 用 `createAgentUIStreamResponse` + `useChat` 做 **流式对话工作台**，实时展示 tool 状态。  
+5. 用 Lifecycle Callbacks 沉淀 **运行轨迹（Traces）**，支持步骤 / 工具耗时观测。
 
 ---
 
-## 快速开始
+## 我提升了什么
 
-### 环境
+1. 把「单次 LLM 问答」升级为 **可多步协作的 Agent 运行时**，工具与子代理可独立扩展。  
+2. 通过 Subagent 摘要回传，**控制主对话上下文规模**，避免长调研拖垮主编排。  
+3. Trace + Artifacts + Memory，把黑盒生成变成 **可解释执行过程**。  
+4. 统一 AI SDK Agent 范式后，新工具只需 schema + execute，**扩展路径标准化**。
 
-- Node.js 22+
-- OpenAI API Key（或兼容网关，设置 `OPENAI_API_KEY`）
-
-### 安装与运行
-
-```bash
-git clone https://github.com/kk18615105392/Agent.git
-cd Agent   # 本地开发目录也可能是 forge-agent
-
-cp .env.example .env.local
-# 编辑 .env.local，填入 OPENAI_API_KEY
-
-npm install
-npm run dev
-```
-
-打开 http://localhost:3000
-
-### 健康检查
-
-```bash
-curl http://localhost:3000/api/health
-```
-
-### 构建
-
-```bash
-npm run build
-npm start
-```
+> 若追问量化：当前是作品集级系统，重点验证架构完整性；上线后可用任务完成率、平均步数、工具正确率、P95 延迟评测。
 
 ---
 
-## 演示剧本（建议面试现场）
+## 面试 30 秒口述
 
-1. **Subagent 调研**  
-   「请调研 Subagent 的适用场景，并输出面试可讲要点。」  
-   → 观察 `delegateResearch` + Trace
-
-2. **计划 + 分析**  
-   「帮我制定 Agent 评测方案，包含指标与风险。」  
-   → `createTaskPlan` / `delegateAnalysis`
-
-3. **工具 + 记忆**  
-   「计算 (128+64)*0.15，并把结论写入记忆。」  
-   → `calculate` + `saveMemory`，侧边栏 Memory 可见
+我做了一个叫 ForgeAgent 的多 Agent 工作台。核心不是聊天框，而是用最新 AI SDK 的 ToolLoopAgent 做编排：主代理会自己选工具，复杂调研和分析会委派给 Subagent，最后还能把结论写进 Memory、把报告存成 Artifact，并且每一步 tool 调用都有 Trace。用来证明我能把 Agent 从 demo 做到可观测、可扩展的工程形态。
 
 ---
 
-## 目录结构
+## 面试官常问（对照本项目）
 
-```text
-src/
-  app/
-    api/chat/route.ts          # Agent 流式入口
-    api/health/route.ts
-    api/workspace/route.ts     # traces / memory / artifacts
-    page.tsx
-  components/
-    chat-app.tsx               # 流式对话 UI
-    workspace-panel.tsx        # 可观测侧栏
-  lib/
-    agents/
-      orchestrator.ts          # ★ 主编排 Agent
-      subagents.ts             # ★ Research/Analyst/Writer
-    tools/index.ts             # ★ 共享 Tools
-    knowledge/base.ts
-    memory/session.ts
-    artifacts/store.ts
-    traces/store.ts
-```
+| 问题 | 怎么答 |
+|------|--------|
+| 为什么用 ToolLoopAgent，而不是单次 generateText？ | 需要多步工具环、统一 stopWhen / lifecycle、配置可复用。 |
+| Subagent 解决什么？ | 上下文卸载、能力隔离；主代理只拿摘要，避免上下文膨胀。 |
+| 如何做可观测？ | `onStart / onStep* / onToolExecution*` 写 Trace，UI 侧栏实时展示。 |
+| Memory 和 Artifacts 区别？ | Memory 服务后续推理；Artifacts 是可交付产物（计划/报告）。 |
+| 生产还缺什么？ | 真实检索、向量库、MCP、toolApproval、评测集与外部 tracing。 |
 
 ---
 
-## 面试可讲点（对照代码）
+## 技术能力对照
 
-1. **为什么要用 ToolLoopAgent，而不是单次 `generateText`？**  
-   多步工具环、可复用配置、统一 stopWhen / lifecycle。
-
-2. **Subagent 解决什么问题？**  
-   上下文卸载、能力隔离、并行调研；主代理只拿摘要。
-
-3. **如何做可观测？**  
-   `onStart / onStep* / onToolExecution*` 写入 Trace，UI 实时展示。
-
-4. **Memory 与 Artifacts 区别？**  
-   Memory 服务后续推理；Artifacts 是可交付产物（计划/报告）。
-
-5. **生产还缺什么？（加分）**  
-   真实联网检索、向量库、MCP Server、toolApproval、评测集与 tracing（Langfuse 等）。
+| 能力点 | 本项目落点 |
+|--------|------------|
+| Agent Loop | `ToolLoopAgent` + `stepCountIs` |
+| Subagents | Research / Analyst / Writer 委派 |
+| Tool Calling | knowledge / plan / memory / artifacts 等 |
+| Streaming UI | Agent UI Stream + `useChat` |
+| Observability | Lifecycle → Trace 面板 |
 
 ---
 
-## GitHub Actions
+## 现场演示三问（可选）
 
-推送到 `main` 后自动执行 `lint` + `build`。  
-工作流：`.github/workflows/ci.yml`
-
----
-
-## License
-
-MIT
+1. 「调研 Subagent 适用场景」→ 看 `delegateResearch` + Trace  
+2. 「制定 Agent 评测方案」→ 看计划 / 分析委派  
+3. 「计算并把结论写入记忆」→ 看 `calculate` + Memory 面板  
